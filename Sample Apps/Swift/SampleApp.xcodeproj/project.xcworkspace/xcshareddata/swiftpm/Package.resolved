@@ -1,0 +1,15 @@
+{
+  "originHash" : "78bf731ebfea625f715d587478adfddf0b3e7bc26a0307e4dbd4bde0b2996ec9",
+  "pins" : [
+    {
+      "identity" : "lp-mobile-sdk-ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/LP-Messaging/lp-mobile-sdk-ios-spm",
+      "state" : {
+        "revision" : "9c53061a05a0c6deacad6f5a04da96d404ecf578",
+        "version" : "6.20.0"
+      }
+    }
+  ],
+  "version" : 3
+}
