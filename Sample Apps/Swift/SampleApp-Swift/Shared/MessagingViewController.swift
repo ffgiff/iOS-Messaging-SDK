@@ -38,7 +38,7 @@ class MessagingViewController: UIViewController {
     private var conversationViewController: ConversationViewController?
     
     // Enter Your Code if using Autherization type 'Code'
-    private let authenticationCode: String? = nil
+    private let authenticationCode: String? = "sub:test" //nil
     
     // Enter Your JWT if using Autherization type 'Implicit'
     private let authenticationJWT: String? = nil
@@ -48,7 +48,7 @@ class MessagingViewController: UIViewController {
         super.viewDidLoad()
         
         // Enter Your Account Number
-        self.accountTextField.text = "ENTER_ACCOUNT"
+        self.accountTextField.text = "83559791"
         
         self.windowSwitch.isOn = windowSwitchValue
         self.authenticationSwitch.isOn = authenticationSwitchValue
@@ -188,7 +188,8 @@ extension MessagingViewController {
         if authenticatedMode {
             authenticationParams = LPAuthenticationParams(authenticationCode: authenticationCode,
                                                           jwt: authenticationJWT,
-                                                          redirectURI: nil,
+                                                          redirectURI: "https://liveperson.net",
+                                                          issuerDisplayName: "firebase",
                                                           certPinningPublicKeys: nil,
                                                           authenticationType: .authenticated)
         }
@@ -241,7 +242,7 @@ extension MessagingViewController {
                           lastName: self.lastNameTextField.text!,
                           nickName: "my nick name",
                           uid: nil,
-                          profileImageURL: "http://www.mrbreakfast.com/ucp/342_6053_ucp.jpg",
+                          profileImageURL: "https://static.liveperson.com/static-assets/2022/02/03184048/Vector.png",
                           phoneNumber: nil,
                           employeeID: "1111-1111")
         LPMessaging.instance.setUserProfile(user, brandID: self.accountTextField.text!)

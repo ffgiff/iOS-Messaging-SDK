@@ -20,17 +20,17 @@ class MonitoringViewController: UIViewController {
     private var campaignInfo: LPCampaignInfo?
     
     // Enter Your Consumer Identifier
-    private let consumerID: String? = nil
+    private let consumerID: String? = "test"//nil
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Enter Your Account Number
-        self.accountTextField.text = nil
+        self.accountTextField.text = "83559791" //nil
         
         // Enter Your App Install Identifier
-        self.appInstallIdentifierTextField.text = nil
+        self.appInstallIdentifierTextField.text = "50029acb-f0a9-4d8c-a345-bf5dd9286d4c"//nil
     }
 
     // MARK: - IBActions
@@ -52,18 +52,19 @@ class MonitoringViewController: UIViewController {
     
     /// Casts to [String : Any] on SDE have been added due to an Apple change in Swift 5.8. This is not required in other swift versions and apple is to revert in swift 5.9. If any issue is caused in other versions remove the cast.
     @IBAction func getEngagementClicked(_ sender: Any) {
-        let entryPoints = ["tel://972737004000",
-                           "http://www.liveperson.com",
-                           "sec://Sport",
-                           "lang://Eng"]
+//        let entryPoints = ["tel://972737004000",
+//                           "http://www.liveperson.com",
+//                           "sec://Sport",
+//                           "lang://Eng"]
+        let entryPoints = [ "mockbot" ]
         
         let engagementAttributes = [
-            ["type": "purchase", "total": 20.0] as [String : Any],
-            ["type": "lead",
-             "lead": ["topic": "luxury car test drive 2015",
-                      "value": 22.22,
-                      "leadId": "xyz123"] as [String : Any]]
-        ]
+//            ["type": "purchase", "total": 20.0] as [String : Any],
+//            ["type": "lead",
+//             "lead": ["topic": "luxury car test drive 2015",
+//                      "value": 22.22,
+//                      "leadId": "xyz123"] as [String : Any]]
+        ] as [[String: Any]]
 
         getEngagement(entryPoints: entryPoints, engagementAttributes: engagementAttributes)
     }
