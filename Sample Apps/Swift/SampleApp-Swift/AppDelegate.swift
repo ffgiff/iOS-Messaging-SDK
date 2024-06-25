@@ -11,7 +11,7 @@ import LPMessagingSDK
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -21,7 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Register for push remote push notifications
         debugPrint("+didFinishLaunchingWithOptions push")
         UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]){ (granted, error) in }
-        application.registerForRemoteNotifications()
+//        application.registerForRemoteNotifications()
+        UIApplication.shared.registerForRemoteNotifications()
+        UNUserNotificationCenter.current().delegate = self
+        LPMessaging.instance.setLoggingLevel(level: .TRACE)
         
         return true
     }
@@ -46,16 +49,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        debugPrint("+application(_:didReceiveRemoteNotification:fetchCompletionHandler)")
-        debugPrint("badge: \(userInfo["badge"]!)")
-        LPMessaging.instance.handlePush(userInfo)
-    }
-    
+//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//        debugPrint("+application(_:didReceiveRemoteNotification:fetchCompletionHandler)")
+//        debugPrint("badge: \(userInfo["badge"]!)")
+//        LPMessaging.instance.handlePush(userInfo)
+//    }
+
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError
                      error: Error) {
         debugPrint("+didFailToRegisterForRemoteNotificationsWithError push \(error)")
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        debugPrint("+application(_:didReceive:withCompletionHandler)")
+        debugPrint("badge: \(response.notification.request.content.userInfo["badge"]!)")
+        completionHandler()
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        debugPrint("+application(_:willPresent:withCompletionHandler)")
+        debugPrint("badge: \(notification.request.content.userInfo["badge"]!)")
+        completionHandler(.badge)
     }
 }
 
