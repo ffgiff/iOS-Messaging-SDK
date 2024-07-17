@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,13 +24,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SSo-3t-388">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFP-hr-xxv">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="360"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="408"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eqw-Cr-OCF">
-                                    <rect key="frame" x="16" y="16" width="382" height="328"/>
+                                    <rect key="frame" x="16" y="16" width="382" height="376"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cNt-gn-JBi">
                                             <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
@@ -113,9 +111,9 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zGy-rf-uvW">
-                                            <rect key="frame" x="0.0" y="192" width="382" height="136"/>
+                                            <rect key="frame" x="0.0" y="192" width="382" height="184"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v3G-V9-wiE">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v3G-V9-wiE">
                                                     <rect key="frame" x="0.0" y="0.0" width="382" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="80N-iz-2Oj"/>
@@ -125,15 +123,22 @@
                                                         <action selector="initSDKsClicked:" destination="-1" eventType="touchUpInside" id="Kyk-NZ-AXM"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8MR-2B-ptc">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8MR-2B-ptc">
                                                     <rect key="frame" x="0.0" y="48" width="382" height="40"/>
                                                     <state key="normal" title="Show Conversation"/>
                                                     <connections>
                                                         <action selector="showConversation" destination="-1" eventType="touchUpInside" id="UII-Yt-NdG"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OdU-vR-XV3">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gxv-h5-ioP">
                                                     <rect key="frame" x="0.0" y="96" width="382" height="40"/>
+                                                    <state key="normal" title="Get Unread Count"/>
+                                                    <connections>
+                                                        <action selector="getUnreadCount" destination="-1" eventType="touchUpInside" id="j6w-kI-Zmh"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OdU-vR-XV3">
+                                                    <rect key="frame" x="0.0" y="144" width="382" height="40"/>
                                                     <state key="normal" title="Logout"/>
                                                     <connections>
                                                         <action selector="logoutClicked:" destination="-1" eventType="touchUpInside" id="upg-EC-fFL"/>
@@ -168,6 +173,7 @@
                     </constraints>
                 </scrollView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="SSo-3t-388" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="KCG-7z-xww"/>
@@ -176,7 +182,6 @@
                 <constraint firstItem="SSo-3t-388" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="yAQ-f0-nxm"/>
                 <constraint firstItem="SSo-3t-388" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="zuA-Of-hfV"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="47.826086956521742" y="35.491071428571423"/>
         </view>
     </objects>

@@ -20,7 +20,7 @@ class MonitoringViewController: UIViewController {
     private var campaignInfo: LPCampaignInfo?
     
     // Enter Your Consumer Identifier
-    private let consumerID: String? = "test"//nil
+    private let consumerID: String? = "20240717"//nil
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -56,7 +56,7 @@ class MonitoringViewController: UIViewController {
 //                           "http://www.liveperson.com",
 //                           "sec://Sport",
 //                           "lang://Eng"]
-        let entryPoints = [ "mockbot" ]
+        let entryPoints = [ "delayed" ]
         
         let engagementAttributes = [
 //            ["type": "purchase", "total": 20.0] as [String : Any],
@@ -70,19 +70,25 @@ class MonitoringViewController: UIViewController {
     }
     
     @IBAction func sendSDEClicked(_ sender: Any) {
-        let entryPoints = ["http://www.liveperson-test.com",
-                           "sec://Food",
-                           "lang://De"]
+//        let entryPoints = ["http://www.liveperson-test.com",
+//                           "sec://Food",
+//                           "lang://De"]
+        let entryPoints = [ "delayed" ]
         
         let engagementAttributes = [
-            ["type": "purchase",
-             "total": 11.7,
-             "orderId": "DRV1534XC"] as [String : Any],
-            ["type": "lead",
-             "lead": ["topic": "luxury car test drive 2015",
-                      "value": 22.22,
-                      "leadId": "xyz123"] as [String : Any]]
-        ]
+            ["type": "service",
+             "service": [
+                "topic": "check-in"
+             ]
+            ]
+//            ["type": "purchase",
+//             "total": 11.7,
+//             "orderId": "DRV1534XC"] as [String : Any],
+//            ["type": "lead",
+//             "lead": ["topic": "luxury car test drive 2015",
+//                      "value": 22.22,
+//                      "leadId": "xyz123"] as [String : Any]]
+        ] as [[String: Any]]
 
         sendSDEwith(entryPoints: entryPoints, engagementAttributes: engagementAttributes)
     }
@@ -186,7 +192,7 @@ extension MonitoringViewController {
      */
     private func showConversationWith(accountNumber: String, campaignInfo: LPCampaignInfo) {
         let conversationQuery = LPMessaging.instance.getConversationBrandQuery(accountNumber, campaignInfo: campaignInfo)
-        let conversationViewParam = LPConversationViewParams(conversationQuery: conversationQuery, isViewOnly: false)
+        let conversationViewParam = LPConversationViewParams(conversationQuery: conversationQuery, isViewOnly: false, welcomeMessage: LPWelcomeMessage(message: nil))
         LPMessaging.instance.showConversation(conversationViewParam)
     }
     
