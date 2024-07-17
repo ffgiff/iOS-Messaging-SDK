@@ -38,7 +38,7 @@ class MessagingViewController: UIViewController {
     private var conversationViewController: ConversationViewController?
     
     // Enter Your Code if using Autherization type 'Code'
-    private let authenticationCode: String? = "sub:test" //nil
+    private let authenticationCode: String? = "sub:20240717" //nil
     
     // Enter Your JWT if using Autherization type 'Implicit'
     private let authenticationJWT: String? = nil
@@ -108,6 +108,10 @@ class MessagingViewController: UIViewController {
         }
     }
     
+    @IBAction func getUnreadCount() {
+        getUnreadMessageCount()
+    }
+
     @IBAction func logoutClicked(_ sender: Any) {
         logoutLPSDK()
     }
