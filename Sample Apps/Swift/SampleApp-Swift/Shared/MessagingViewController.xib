@@ -14,6 +14,7 @@
                 <outlet property="authenticationSwitch" destination="Nh5-eH-II1" id="eSh-Ya-PVO"/>
                 <outlet property="firstNameTextField" destination="cNt-gn-JBi" id="lZM-SE-izd"/>
                 <outlet property="lastNameTextField" destination="JrI-sV-NeC" id="tN0-Bk-U3z"/>
+                <outlet property="unreadCountTextField" destination="rNX-gq-Jli" id="KYN-NA-eY9"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Foj-mJ-N99"/>
                 <outlet property="windowSwitch" destination="PNj-3q-7fu" id="4BB-dv-OpY"/>
             </connections>
@@ -130,13 +131,26 @@
                                                         <action selector="showConversation" destination="-1" eventType="touchUpInside" id="UII-Yt-NdG"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gxv-h5-ioP">
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ReG-21-4bY">
                                                     <rect key="frame" x="0.0" y="96" width="382" height="40"/>
-                                                    <state key="normal" title="Get Unread Count"/>
-                                                    <connections>
-                                                        <action selector="getUnreadCount" destination="-1" eventType="touchUpInside" id="j6w-kI-Zmh"/>
-                                                    </connections>
-                                                </button>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gxv-h5-ioP">
+                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="40"/>
+                                                            <state key="normal" title="Get Unread Count"/>
+                                                            <connections>
+                                                                <action selector="getUnreadCount" destination="-1" eventType="touchUpInside" id="j6w-kI-Zmh"/>
+                                                            </connections>
+                                                        </button>
+                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rNX-gq-Jli">
+                                                            <rect key="frame" x="191" y="0.0" width="191" height="40"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits"/>
+                                                        </textField>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="rNX-gq-Jli" firstAttribute="width" secondItem="gxv-h5-ioP" secondAttribute="width" id="7su-wB-bH2"/>
+                                                    </constraints>
+                                                </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OdU-vR-XV3">
                                                     <rect key="frame" x="0.0" y="144" width="382" height="40"/>
                                                     <state key="normal" title="Logout"/>

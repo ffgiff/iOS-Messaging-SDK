@@ -17,6 +17,7 @@ class MessagingViewController: UIViewController {
     @IBOutlet var lastNameTextField: UITextField!
     @IBOutlet var windowSwitch: UISwitch!
     @IBOutlet var authenticationSwitch: UISwitch!
+    @IBOutlet var unreadCountTextField: UITextField!
     
     //MARK: - Properties
     private var windowSwitchValue: Bool {
@@ -56,6 +57,7 @@ class MessagingViewController: UIViewController {
         LPMessaging.instance.delegate = self
         self.setSDKConfigurations()
         LPMessaging.instance.setLoggingLevel(level: .INFO)
+        self.unreadCountTextField.text = "0"
     }
 
     //MARK: - IBActions
@@ -145,6 +147,7 @@ extension MessagingViewController {
         let conversationQuery = LPMessaging.instance.getConversationBrandQuery(accountNumber)
         LPMessaging.instance.getUnreadMessagesCount(conversationQuery, completion: { (count) in
             print("unread message count: \(count)")
+            self.unreadCountTextField.text = "\(count)"
         }) { (error) in
             print("unread message count - error: \(error.localizedDescription)")
         }
