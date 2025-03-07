@@ -18,6 +18,8 @@ class MessagingViewController: UIViewController {
     @IBOutlet var windowSwitch: UISwitch!
     @IBOutlet var authenticationSwitch: UISwitch!
     @IBOutlet var unreadCountTextField: UITextField!
+    @IBOutlet var authCodeTextField: UITextField!
+    @IBOutlet var codeFlowSwitch: UISwitch!
     
     //MARK: - Properties
     private var windowSwitchValue: Bool {
@@ -39,7 +41,7 @@ class MessagingViewController: UIViewController {
     private var conversationViewController: ConversationViewController?
     
     // Enter Your Code if using Autherization type 'Code'
-    private let authenticationCode: String? = "sub:20240717" //nil
+    private let authenticationCode: String? = nil
     
     // Enter Your JWT if using Autherization type 'Implicit'
     private let authenticationJWT: String? = nil
@@ -193,8 +195,8 @@ extension MessagingViewController {
         //LPAuthenticationParams
         var authenticationParams: LPAuthenticationParams?
         if authenticatedMode {
-            authenticationParams = LPAuthenticationParams(authenticationCode: authenticationCode,
-                                                          jwt: authenticationJWT,
+            authenticationParams = LPAuthenticationParams(authenticationCode: self.codeFlowSwitch.isOn ? self.authCodeTextField.text : nil,
+                                                          jwt: self.codeFlowSwitch.isOn ? nil : self.authCodeTextField.text,
                                                           redirectURI: "https://liveperson.net",
                                                           issuerDisplayName: "firebase",
                                                           certPinningPublicKeys: nil,
@@ -262,9 +264,13 @@ extension MessagingViewController {
          https://developers.liveperson.com/mobile-app-messaging-sdk-for-ios-methods-logout.html
      */
     private func logoutLPSDK() {
-        LPMessaging.instance.logout(unregisterType: .all, completion: {
-            print("successfully logout from MessagingSDK")
-        }) { (errors) in
+        LPMessaging.instance.logout(
+            authType: authenticationSwitchValue ? .authenticated : .unauthenticated,
+            unregisterType: .all,
+            completion: {
+                print("successfully logout from MessagingSDK")
+            }
+        ) { (errors) in
             print("failed to logout from MessagingSDK - error: \(errors)")
         }
     }

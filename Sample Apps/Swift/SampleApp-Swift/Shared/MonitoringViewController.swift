@@ -20,7 +20,7 @@ class MonitoringViewController: UIViewController {
     private var campaignInfo: LPCampaignInfo?
     
     // Enter Your Consumer Identifier
-    private let consumerID: String? = "20240717"//nil
+    private let consumerID: String? = nil
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -203,9 +203,13 @@ extension MonitoringViewController {
         https://developers.liveperson.com/mobile-app-messaging-sdk-for-ios-methods-logout.html
      */
     private func logoutLPSDK() {
-        LPMessaging.instance.logout(unregisterType: .all, completion: {
-            print("successfully logout from MessagingSDK")
-        }) { (errors) in
+        LPMessaging.instance.logout(
+            authType: consumerID == nil ? .unauthenticated : .authenticated,
+            unregisterType: .all,
+            completion: {
+                print("successfully logout from MessagingSDK")
+            }
+        ) { (errors) in
             print("failed to logout from MessagingSDK - error: \(errors)")
         }
     }
