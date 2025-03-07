@@ -469,8 +469,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/LP-Messaging/lp-mobile-sdk-ios-spm";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.18.0;
+				kind = exactVersion;
+				version = 6.23.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

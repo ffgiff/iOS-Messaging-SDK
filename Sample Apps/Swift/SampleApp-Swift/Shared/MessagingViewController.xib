@@ -11,7 +11,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessagingViewController" customModule="SampleApp" customModuleProvider="target">
             <connections>
                 <outlet property="accountTextField" destination="TuJ-DJ-eKP" id="fSq-v8-T8A"/>
+                <outlet property="authCodeTextField" destination="WeO-5C-ujp" id="SFU-oY-f9L"/>
                 <outlet property="authenticationSwitch" destination="Nh5-eH-II1" id="eSh-Ya-PVO"/>
+                <outlet property="codeFlowSwitch" destination="iCM-2U-pEY" id="BQ8-SP-fmG"/>
                 <outlet property="firstNameTextField" destination="cNt-gn-JBi" id="lZM-SE-izd"/>
                 <outlet property="lastNameTextField" destination="JrI-sV-NeC" id="tN0-Bk-U3z"/>
                 <outlet property="unreadCountTextField" destination="rNX-gq-Jli" id="KYN-NA-eY9"/>
@@ -28,10 +30,10 @@
                     <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFP-hr-xxv">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="408"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="447"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eqw-Cr-OCF">
-                                    <rect key="frame" x="16" y="16" width="382" height="376"/>
+                                    <rect key="frame" x="16" y="16" width="382" height="415"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cNt-gn-JBi">
                                             <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
@@ -67,10 +69,35 @@
                                             </connections>
                                         </textField>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bhL-rh-izp">
-                                            <rect key="frame" x="0.0" y="114" width="382" height="70"/>
+                                            <rect key="frame" x="0.0" y="114" width="382" height="109"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="NQL-3E-0Ca">
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="MQa-2b-nNE">
                                                     <rect key="frame" x="0.0" y="0.0" width="382" height="31"/>
+                                                    <subviews>
+                                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Authorization code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WeO-5C-ujp" userLabel="AuthCode">
+                                                            <rect key="frame" x="0.0" y="0.0" width="212.5" height="31"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits"/>
+                                                        </textField>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Code Flow" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RG1-3n-Q67">
+                                                            <rect key="frame" x="234.5" y="0.0" width="76.5" height="31"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iCM-2U-pEY">
+                                                            <rect key="frame" x="333" y="0.0" width="51" height="31"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="31" id="jxY-b3-BLg"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <action selector="authenticationSwitchChanged:" destination="-1" eventType="valueChanged" id="Hkd-DM-gRl"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="NQL-3E-0Ca">
+                                                    <rect key="frame" x="0.0" y="39" width="382" height="31"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authentication mode" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8b-cG-cAy">
                                                             <rect key="frame" x="0.0" y="0.0" width="311" height="31"/>
@@ -90,7 +117,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="3dq-Wk-EPN">
-                                                    <rect key="frame" x="0.0" y="39" width="382" height="31"/>
+                                                    <rect key="frame" x="0.0" y="78" width="382" height="31"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Window mode" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9OB-lB-eRN">
                                                             <rect key="frame" x="0.0" y="0.0" width="311" height="31"/>
@@ -110,9 +137,15 @@
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9OB-lB-eRN" firstAttribute="trailing" secondItem="O8b-cG-cAy" secondAttribute="trailing" id="UbA-6R-M3M"/>
+                                                <constraint firstItem="RG1-3n-Q67" firstAttribute="trailing" secondItem="O8b-cG-cAy" secondAttribute="trailing" id="W3x-op-vVr"/>
+                                                <constraint firstItem="Nh5-eH-II1" firstAttribute="trailing" secondItem="iCM-2U-pEY" secondAttribute="trailing" id="dnE-hQ-v6C"/>
+                                                <constraint firstItem="PNj-3q-7fu" firstAttribute="trailing" secondItem="iCM-2U-pEY" secondAttribute="trailing" id="e0v-XL-6yI"/>
+                                            </constraints>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zGy-rf-uvW">
-                                            <rect key="frame" x="0.0" y="192" width="382" height="184"/>
+                                            <rect key="frame" x="0.0" y="231" width="382" height="184"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v3G-V9-wiE">
                                                     <rect key="frame" x="0.0" y="0.0" width="382" height="40"/>
