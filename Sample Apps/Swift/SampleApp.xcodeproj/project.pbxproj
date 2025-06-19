@@ -416,6 +416,7 @@
 				CURRENT_PROJECT_VERSION = 152;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 150;
 				DEVELOPMENT_TEAM = QHSP955PDB;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -469,7 +470,7 @@
 			repositoryURL = "https://github.com/LP-Messaging/lp-mobile-sdk-ios-spm";
 			requirement = {
 				kind = exactVersion;
-				version = 6.23.0;
+				version = 6.23.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

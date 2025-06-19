@@ -36,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             LPMessaging.instance.registerPushNotifications(
                 token: deviceToken,
                 notificationDelegate: self,
+//                authenticationParams: nil
                 authenticationParams: LPAuthenticationParams(
                     authenticationCode: "sub:test",
                     jwt: nil,
@@ -70,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         debugPrint("+application(_:willPresent:withCompletionHandler)")
         debugPrint("badge: \(notification.request.content.userInfo["badge"]!)")
+        LPMessaging.instance.handlePush(notification.request.content.userInfo)
         completionHandler(.badge)
     }
 }
@@ -81,6 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
  */
 extension AppDelegate: LPMessagingSDKNotificationDelegate {
     func LPMessagingSDKNotification(shouldShowPushNotification notification: LPNotification) -> Bool {
+        debugPrint("+LPMessagingSDKNotification:shouldShowPushNotification")
         return true
     }
     
@@ -94,6 +97,7 @@ extension AppDelegate: LPMessagingSDKNotificationDelegate {
     
     // Example on how to implement a custom InApp Notification that supports Proactive and IVR Deflection
 //    func LPMessagingSDKNotification(customLocalPushNotificationView notification: LPNotification) -> UIView {
+//        debugPrint("+LPMessagingSDKNotification:customLocalPushNotificationView")
 //        let view = Toast(frame: CGRect(x: 0,
 //                                       y: 0,
 //                                       width: UIScreen.main.bounds.width,
