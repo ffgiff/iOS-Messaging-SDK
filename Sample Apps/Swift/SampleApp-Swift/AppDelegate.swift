@@ -11,7 +11,7 @@ import LPMessagingSDK
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -19,18 +19,80 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Register for push remote push notifications
+        debugPrint("+didFinishLaunchingWithOptions push")
         UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]){ (granted, error) in }
-        application.registerForRemoteNotifications()
+//        application.registerForRemoteNotifications()
+        UIApplication.shared.registerForRemoteNotifications()
+        UNUserNotificationCenter.current().delegate = self
+        LPMessaging.instance.setLoggingLevel(level: .TRACE)
         
         return true
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        LPMessaging.instance.registerPushNotifications(token: deviceToken, notificationDelegate: self)
+        debugPrint("+didRegisterForRemoteNotificationsWithDeviceToken push \(String(decoding: deviceToken, as: UTF8.self))")
+        do {
+            try LPMessaging.instance.initialize("83559791")
+            LPMessaging.instance.registerPushNotifications(
+                token: deviceToken,
+                notificationDelegate: self,
+//                authenticationParams: nil
+                authenticationParams: LPAuthenticationParams(
+                    authenticationCode: "sub:test",
+                    jwt: nil,
+                    issuerDisplayName: "firebase",
+                    certPinningPublicKeys: nil
+                )
+            )
+        } catch let error as NSError {
+            print("initialize error: \(error)")
+            LPMessaging.instance.registerPushNotifications(token: deviceToken, notificationDelegate: self)
+        }
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        LPMessaging.instance.handlePush(userInfo)
+//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//        debugPrint("+application(_:didReceiveRemoteNotification:fetchCompletionHandler)")
+//        debugPrint("badge: \(userInfo["badge"]!)")
+//        LPMessaging.instance.handlePush(userInfo)
+//    }
+
+    func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError
+                     error: Error) {
+        debugPrint("+didFailToRegisterForRemoteNotificationsWithError push \(error)")
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        debugPrint("+application(_:didReceive:withCompletionHandler)")
+//        debugPrint("badge: \(response.notification.request.content.userInfo["badge"]!)")
+        LPMessaging.instance.getPendingProactiveMessages(
+            LPMessaging.instance.getConversationBrandQuery("83559791"),
+            authenticationParams: LPAuthenticationParams(
+                authenticationCode: "sub:test",
+                jwt: nil,
+                redirectURI: "https://liveperson.net",
+                issuerDisplayName: "firebase",
+                certPinningPublicKeys: nil,
+                authenticationType: .authenticated),
+            alternateBundleID: nil) { notifications in
+                debugPrint("notifications: \(notifications)")
+                LPMessaging.instance.handleTapForInAppNotifications(notifications: notifications, clearOthers: false)
+            } failure: { error in
+                debugPrint("error: \(error)")
+            }
+
+        completionHandler()
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        debugPrint("+application(_:willPresent:withCompletionHandler)")
+//        debugPrint("badge: \(notification.request.content.userInfo["badge"]!)")
+        LPMessaging.instance.handlePush(notification.request.content.userInfo)
+        if (notification.request.content.userInfo["badge"] != nil) {
+            completionHandler(.badge)
+        } else {
+            completionHandler(.badge)
+        }
     }
 }
 
@@ -41,19 +103,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  */
 extension AppDelegate: LPMessagingSDKNotificationDelegate {
     func LPMessagingSDKNotification(shouldShowPushNotification notification: LPNotification) -> Bool {
+        debugPrint("+LPMessagingSDKNotification:shouldShowPushNotification")
         return true
     }
     
     func LPMessagingSDKNotification(didReceivePushNotification notification: LPNotification) {
-        
+        debugPrint("+LPMessagingSDKNotification:didReceivePushNotification")
     }
     
     func LPMessagingSDKNotification(notificationTapped notification: LPNotification) {
-        
+        debugPrint("+LPMessagingSDKNotification:notificationTapped")
     }
     
     // Example on how to implement a custom InApp Notification that supports Proactive and IVR Deflection
 //    func LPMessagingSDKNotification(customLocalPushNotificationView notification: LPNotification) -> UIView {
+//        debugPrint("+LPMessagingSDKNotification:customLocalPushNotificationView")
 //        let view = Toast(frame: CGRect(x: 0,
 //                                       y: 0,
 //                                       width: UIScreen.main.bounds.width,

@@ -17,6 +17,9 @@ class MessagingViewController: UIViewController {
     @IBOutlet var lastNameTextField: UITextField!
     @IBOutlet var windowSwitch: UISwitch!
     @IBOutlet var authenticationSwitch: UISwitch!
+    @IBOutlet var unreadCountTextField: UITextField!
+    @IBOutlet var authCodeTextField: UITextField!
+    @IBOutlet var codeFlowSwitch: UISwitch!
     
     //MARK: - Properties
     private var windowSwitchValue: Bool {
@@ -38,7 +41,7 @@ class MessagingViewController: UIViewController {
     private var conversationViewController: ConversationViewController?
     
     // Enter Your Code if using Autherization type 'Code'
-    private let authenticationCode: String? = nil
+    private let authenticationCode: String? = "sub:test"//nil
     
     // Enter Your JWT if using Autherization type 'Implicit'
     private let authenticationJWT: String? = nil
@@ -48,7 +51,7 @@ class MessagingViewController: UIViewController {
         super.viewDidLoad()
         
         // Enter Your Account Number
-        self.accountTextField.text = "ENTER_ACCOUNT"
+        self.accountTextField.text = "83559791"
         
         self.windowSwitch.isOn = windowSwitchValue
         self.authenticationSwitch.isOn = authenticationSwitchValue
@@ -56,6 +59,7 @@ class MessagingViewController: UIViewController {
         LPMessaging.instance.delegate = self
         self.setSDKConfigurations()
         LPMessaging.instance.setLoggingLevel(level: .INFO)
+        self.unreadCountTextField.text = "0"
     }
 
     //MARK: - IBActions
@@ -108,6 +112,10 @@ class MessagingViewController: UIViewController {
         }
     }
     
+    @IBAction func getUnreadCount() {
+        getUnreadMessageCount()
+    }
+
     @IBAction func logoutClicked(_ sender: Any) {
         logoutLPSDK()
     }
@@ -141,6 +149,7 @@ extension MessagingViewController {
         let conversationQuery = LPMessaging.instance.getConversationBrandQuery(accountNumber)
         LPMessaging.instance.getUnreadMessagesCount(conversationQuery, completion: { (count) in
             print("unread message count: \(count)")
+            self.unreadCountTextField.text = "\(count)"
         }) { (error) in
             print("unread message count - error: \(error.localizedDescription)")
         }
@@ -186,9 +195,10 @@ extension MessagingViewController {
         //LPAuthenticationParams
         var authenticationParams: LPAuthenticationParams?
         if authenticatedMode {
-            authenticationParams = LPAuthenticationParams(authenticationCode: authenticationCode,
-                                                          jwt: authenticationJWT,
-                                                          redirectURI: nil,
+            authenticationParams = LPAuthenticationParams(authenticationCode: self.codeFlowSwitch.isOn ? self.authCodeTextField.text : nil,
+                                                          jwt: self.codeFlowSwitch.isOn ? nil : self.authCodeTextField.text,
+                                                          redirectURI: "https://liveperson.net",
+                                                          issuerDisplayName: "firebase",
                                                           certPinningPublicKeys: nil,
                                                           authenticationType: .authenticated)
         }
@@ -241,7 +251,7 @@ extension MessagingViewController {
                           lastName: self.lastNameTextField.text!,
                           nickName: "my nick name",
                           uid: nil,
-                          profileImageURL: "http://www.mrbreakfast.com/ucp/342_6053_ucp.jpg",
+                          profileImageURL: "https://static.liveperson.com/static-assets/2022/02/03184048/Vector.png",
                           phoneNumber: nil,
                           employeeID: "1111-1111")
         LPMessaging.instance.setUserProfile(user, brandID: self.accountTextField.text!)
@@ -254,9 +264,13 @@ extension MessagingViewController {
          https://developers.liveperson.com/mobile-app-messaging-sdk-for-ios-methods-logout.html
      */
     private func logoutLPSDK() {
-        LPMessaging.instance.logout(unregisterType: .all, completion: {
-            print("successfully logout from MessagingSDK")
-        }) { (errors) in
+        LPMessaging.instance.logout(
+            authType: authenticationSwitchValue ? .authenticated : .unauthenticated,
+            unregisterType: .all,
+            completion: {
+                print("successfully logout from MessagingSDK")
+            }
+        ) { (errors) in
             print("failed to logout from MessagingSDK - error: \(errors)")
         }
     }
