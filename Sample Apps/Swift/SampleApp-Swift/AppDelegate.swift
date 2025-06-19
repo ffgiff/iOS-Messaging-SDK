@@ -64,15 +64,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         debugPrint("+application(_:didReceive:withCompletionHandler)")
-        debugPrint("badge: \(response.notification.request.content.userInfo["badge"]!)")
+//        debugPrint("badge: \(response.notification.request.content.userInfo["badge"]!)")
+        LPMessaging.instance.getPendingProactiveMessages(
+            LPMessaging.instance.getConversationBrandQuery("83559791"),
+            authenticationParams: LPAuthenticationParams(
+                authenticationCode: "sub:test",
+                jwt: nil,
+                redirectURI: "https://liveperson.net",
+                issuerDisplayName: "firebase",
+                certPinningPublicKeys: nil,
+                authenticationType: .authenticated),
+            alternateBundleID: nil) { notifications in
+                debugPrint("notifications: \(notifications)")
+                LPMessaging.instance.handleTapForInAppNotifications(notifications: notifications, clearOthers: false)
+            } failure: { error in
+                debugPrint("error: \(error)")
+            }
+
         completionHandler()
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         debugPrint("+application(_:willPresent:withCompletionHandler)")
-        debugPrint("badge: \(notification.request.content.userInfo["badge"]!)")
+//        debugPrint("badge: \(notification.request.content.userInfo["badge"]!)")
         LPMessaging.instance.handlePush(notification.request.content.userInfo)
-        completionHandler(.badge)
+        if (notification.request.content.userInfo["badge"] != nil) {
+            completionHandler(.badge)
+        } else {
+            completionHandler(.badge)
+        }
     }
 }
 
