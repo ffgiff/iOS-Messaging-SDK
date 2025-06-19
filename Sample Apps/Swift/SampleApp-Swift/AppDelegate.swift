@@ -65,31 +65,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         debugPrint("+application(_:didReceive:withCompletionHandler)")
 //        debugPrint("badge: \(response.notification.request.content.userInfo["badge"]!)")
-        let accountNumber = "83559791"
-        LPMessaging.instance.getPendingProactiveMessages(
-            LPMessaging.instance.getConversationBrandQuery(accountNumber),
-            authenticationParams: LPAuthenticationParams(
-                authenticationCode: "sub:test",
-                jwt: nil,
-                redirectURI: "https://liveperson.net",
-                issuerDisplayName: "firebase",
-                certPinningPublicKeys: nil,
-                authenticationType: .authenticated),
-            alternateBundleID: nil) { notifications in
-                debugPrint("notifications: \(notifications)")
-                LPMessaging.instance.handleTapForInAppNotifications(notifications: notifications, clearOthers: false)
-                let campaignInfo = LPCampaignInfo(
-                    campaignId: Int(notifications[0].proActiveData!.leCampaignId!)!,
-                    engagementId: Int(notifications[0].proActiveData!.leEngagementId!)!,
-                    contextId: nil, sessionId: nil, visitorId: nil)
-                let conversationQuery = LPMessaging.instance.getConversationBrandQuery(accountNumber, campaignInfo: campaignInfo)
-//                let conversationViewParam = LPConversationViewParams(conversationQuery: conversationQuery, isViewOnly: false, welcomeMessage: LPWelcomeMessage(message: nil))
-                let conversationViewParam = LPConversationViewParams(conversationQuery: conversationQuery, isViewOnly: false, welcomeMessage: LPWelcomeMessage(message: notifications[0].text))
-                LPMessaging.instance.showConversation(conversationViewParam)
-            } failure: { error in
-                debugPrint("error: \(error)")
-            }
-
+//        let accountNumber = "83559791"
+//        LPMessaging.instance.getPendingProactiveMessages(
+//            LPMessaging.instance.getConversationBrandQuery(accountNumber),
+//            authenticationParams: LPAuthenticationParams(
+//                authenticationCode: "sub:test",
+//                jwt: nil,
+//                redirectURI: "https://liveperson.net",
+//                issuerDisplayName: "firebase",
+//                certPinningPublicKeys: nil,
+//                authenticationType: .authenticated),
+//            alternateBundleID: nil) { notifications in
+//                debugPrint("notifications: \(notifications)")
+//                LPMessaging.instance.handleTapForInAppNotifications(notifications: notifications, clearOthers: false)
+//                let campaignInfo = LPCampaignInfo(
+//                    campaignId: Int(response.notification.request.content.proActiveData!.leCampaignId!)!,
+//                    engagementId: Int(response.notification.request.content.proActiveData!.leEngagementId!)!,
+//                    contextId: nil, sessionId: nil, visitorId: nil)
+//                let conversationQuery = LPMessaging.instance.getConversationBrandQuery(accountNumber, campaignInfo: campaignInfo)
+////                let conversationViewParam = LPConversationViewParams(conversationQuery: conversationQuery, isViewOnly: false, welcomeMessage: LPWelcomeMessage(message: nil))
+//                let conversationViewParam = LPConversationViewParams(conversationQuery: conversationQuery, isViewOnly: false, welcomeMessage: LPWelcomeMessage(message: response.notification.request.content.text))
+//                LPMessaging.instance.showConversation(conversationViewParam)
+//            } failure: { error in
+//                debugPrint("error: \(error)")
+//            }
+        LPMessaging.instance.handlePush(response.notification.request.content.userInfo)
         completionHandler()
     }
 
