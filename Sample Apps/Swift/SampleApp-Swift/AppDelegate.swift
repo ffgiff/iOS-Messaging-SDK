@@ -65,8 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         debugPrint("+application(_:didReceive:withCompletionHandler)")
 //        debugPrint("badge: \(response.notification.request.content.userInfo["badge"]!)")
+        let accountNumber = "83559791"
         LPMessaging.instance.getPendingProactiveMessages(
-            LPMessaging.instance.getConversationBrandQuery("83559791"),
+            LPMessaging.instance.getConversationBrandQuery(accountNumber),
             authenticationParams: LPAuthenticationParams(
                 authenticationCode: "sub:test",
                 jwt: nil,
@@ -77,6 +78,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             alternateBundleID: nil) { notifications in
                 debugPrint("notifications: \(notifications)")
                 LPMessaging.instance.handleTapForInAppNotifications(notifications: notifications, clearOthers: false)
+                let campaignInfo = LPCampaignInfo(
+                    campaignId: Int(notifications[0].proActiveData!.leCampaignId!)!,
+                    engagementId: Int(notifications[0].proActiveData!.leEngagementId!)!,
+                    contextId: nil, sessionId: nil, visitorId: nil)
+                let conversationQuery = LPMessaging.instance.getConversationBrandQuery(accountNumber, campaignInfo: campaignInfo)
+//                let conversationViewParam = LPConversationViewParams(conversationQuery: conversationQuery, isViewOnly: false, welcomeMessage: LPWelcomeMessage(message: nil))
+                let conversationViewParam = LPConversationViewParams(conversationQuery: conversationQuery, isViewOnly: false, welcomeMessage: LPWelcomeMessage(message: notifications[0].text))
+                LPMessaging.instance.showConversation(conversationViewParam)
             } failure: { error in
                 debugPrint("error: \(error)")
             }
@@ -113,6 +122,30 @@ extension AppDelegate: LPMessagingSDKNotificationDelegate {
     
     func LPMessagingSDKNotification(notificationTapped notification: LPNotification) {
         debugPrint("+LPMessagingSDKNotification:notificationTapped")
+        let accountNumber = "83559791"
+        LPMessaging.instance.getPendingProactiveMessages(
+            LPMessaging.instance.getConversationBrandQuery(accountNumber),
+            authenticationParams: LPAuthenticationParams(
+                authenticationCode: "sub:test",
+                jwt: nil,
+                redirectURI: "https://liveperson.net",
+                issuerDisplayName: "firebase",
+                certPinningPublicKeys: nil,
+                authenticationType: .authenticated),
+            alternateBundleID: nil) { notifications in
+                debugPrint("notifications: \(notification)")
+                LPMessaging.instance.handleTapForInAppNotifications(notifications: [notification], clearOthers: false)
+                let campaignInfo = LPCampaignInfo(
+                    campaignId: Int(notification.proActiveData!.leCampaignId!)!,
+                    engagementId: Int(notification.proActiveData!.leEngagementId!)!,
+                    contextId: nil, sessionId: nil, visitorId: nil)
+                let conversationQuery = LPMessaging.instance.getConversationBrandQuery(accountNumber, campaignInfo: campaignInfo)
+//                let conversationViewParam = LPConversationViewParams(conversationQuery: conversationQuery, isViewOnly: false, welcomeMessage: LPWelcomeMessage(message: nil))
+                let conversationViewParam = LPConversationViewParams(conversationQuery: conversationQuery, isViewOnly: false, welcomeMessage: LPWelcomeMessage(message: notification.text))
+                LPMessaging.instance.showConversation(conversationViewParam)
+            } failure: { error in
+                debugPrint("error: \(error)")
+            }
     }
     
     // Example on how to implement a custom InApp Notification that supports Proactive and IVR Deflection
