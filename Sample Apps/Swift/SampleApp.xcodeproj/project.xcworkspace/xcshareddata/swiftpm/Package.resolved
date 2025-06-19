@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/LP-Messaging/lp-mobile-sdk-ios-spm",
       "state" : {
-        "revision" : "356c200b97fc44ea9d2377efb70fc368af80ea7a",
-        "version" : "6.23.0"
+        "revision" : "33a664e247b2be5fba981e841c83dda809002d41",
+        "version" : "6.23.1"
       }
     }
   ],

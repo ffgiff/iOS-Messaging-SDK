@@ -20,7 +20,7 @@ class MonitoringViewController: UIViewController {
     private var campaignInfo: LPCampaignInfo?
     
     // Enter Your Consumer Identifier
-    private let consumerID: String? = nil
+    private let consumerID: String? = "test"//nil
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
