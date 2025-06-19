@@ -381,9 +381,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = "SampleApp-Swift/SampleApp-Swift.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
-				CURRENT_PROJECT_VERSION = 150;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 102;
+				CURRENT_PROJECT_VERSION = 150;
 				DEVELOPMENT_TEAM = QHSP955PDB;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -415,8 +414,8 @@
 				CODE_SIGN_ENTITLEMENTS = "SampleApp-Swift/SampleApp-Swift.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
-				CURRENT_PROJECT_VERSION = 150;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 150;
 				DEVELOPMENT_TEAM = QHSP955PDB;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -470,7 +469,7 @@
 			repositoryURL = "https://github.com/LP-Messaging/lp-mobile-sdk-ios-spm";
 			requirement = {
 				kind = exactVersion;
-				version = 6.23.0;
+				version = 6.23.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

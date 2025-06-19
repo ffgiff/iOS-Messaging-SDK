@@ -41,7 +41,7 @@ class MessagingViewController: UIViewController {
     private var conversationViewController: ConversationViewController?
     
     // Enter Your Code if using Autherization type 'Code'
-    private let authenticationCode: String? = nil
+    private let authenticationCode: String? = "sub:test"//nil
     
     // Enter Your JWT if using Autherization type 'Implicit'
     private let authenticationJWT: String? = nil
