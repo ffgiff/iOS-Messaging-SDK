@@ -76,7 +76,7 @@ class Toast: UIView {
     
     @objc func tapped(_ sender: UIView){
         if let notification = self.notification {
-            LPMessaging.instance.handleTapForInAppNotification(notification: notification)
+            LPMessaging.instance.handleTapForInAppNotifications(notifications: [notification], clearOthers: false)
         }
     }
 }
